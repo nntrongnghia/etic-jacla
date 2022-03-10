@@ -38,3 +38,5 @@ idf_component_register(SRCS ${app_sources} "main.c"
 esp-who
 documents
 build
+sdkconfig
+sdkconfig.old

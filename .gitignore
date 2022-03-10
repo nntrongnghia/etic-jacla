@@ -22,7 +22,10 @@
 
 # Compiled Static libraries
 *.lai
-*.la
+*.laces ${CMAKE_SOURCE_DIR}/../../src/*.*)
+
+idf_component_register(SRCS ${app_sources} "main.c"
+                    INCLUDE_DIRS "${C
 *.a
 *.lib
 
@@ -34,3 +37,4 @@
 .vscode
 esp-who
 documents
+**build

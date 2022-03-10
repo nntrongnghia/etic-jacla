@@ -6,7 +6,7 @@ There is 5 principle folders:
 - `include` for C header files
 - `src` for source files with the same names as headers in `include`
 - `main` for `main.c` and compilator configuration
-- `demo` for simple fucntionality demo (QR code scanner, camera, RFID, etc.)
+- `test` for simple fucntionality test (QR code scanner, camera, RFID, etc.)
 
 # Usage
 ```

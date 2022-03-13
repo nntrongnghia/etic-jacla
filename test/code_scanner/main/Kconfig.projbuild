@@ -1,0 +1,7 @@
+menu "QR decoding"
+
+  config AES_KEY
+    string "AES Decryption Key"
+    default ""
+	
+endmenu

@@ -5,7 +5,7 @@
 #include "esp_system.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "app_peripherals.h"
+#include "camera.h"
 
 #include "esp_code_scanner.h"
 

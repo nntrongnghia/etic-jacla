@@ -1,4 +1,4 @@
-#include "app_peripherals.h"
+#include "camera.h"
 #include "esp_log.h"
 #include "esp_system.h"
 

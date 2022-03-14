@@ -8,9 +8,10 @@
 #include "freertos/task.h"
 #include "mbedtls/aes.h"
 #include "mbedtls/base64.h"
-#include "app_peripherals.h"
+#include "camera.h"
 #include "aes.h"
 #include "esp_code_scanner.h"
+#include "misc.h"
 
 static const char *TAG = "APP_CODE_SCANNER";
 const unsigned char dec_key[] = CONFIG_AES_KEY;

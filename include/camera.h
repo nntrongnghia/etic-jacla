@@ -7,6 +7,10 @@
 
 #include "esp_camera.h"
 
+/**
+ * @brief Camera pin configuration
+ * 
+ */
 #define CAMERA_MODULE_NAME "ESP-EYE"
 #define CAMERA_PIN_PWDN -1
 #define CAMERA_PIN_RESET -1
@@ -31,9 +35,10 @@
 #define CAMERA_FRAME_SIZE FRAMESIZE_240X240
 #define CAMERA_FB_COUNT 2
 
-
-
-
+/**
+ * @brief Init camera
+ * 
+ */
 #ifdef __cplusplus
 extern "C"
 {
@@ -43,5 +48,3 @@ extern "C"
 }
 #endif
 
-#define SANITY_CHECK(ret, val) if(ret != val){vTaskDelete(NULL); return;}
-#define SANITY_CHECK_M(ret, val, tag, message) if(ret != val){ESP_LOGE(tag, message); vTaskDelete(NULL); return;}

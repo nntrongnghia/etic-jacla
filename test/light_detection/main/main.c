@@ -16,20 +16,19 @@
 static const char *TAG = "LIGHT_DETECTION";
 static QueueHandle_t gpio_evt_queue = NULL;
 
-int isr_count = 0;
-
 void IRAM_ATTR color14_isr_handler()
 {
-    isr_count += 1;
     xQueueSendFromISR(gpio_evt_queue, NULL, NULL);
 }
 
 
 static void light_detection_task()
 {
+    int isr_count = 0;
     while (1)
     {   
         if(xQueueReceive(gpio_evt_queue, NULL, 1)){
+            isr_count += 1;
             color14_get_ls_int_status();
         }
         ESP_LOGI("Color14", "ALS: %d\tisr_count: %d", color14_read_als(), isr_count);

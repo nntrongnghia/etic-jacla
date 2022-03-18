@@ -3,6 +3,6 @@
 # project subdirectory.
 #
 
-PROJECT_NAME := sample_project
+PROJECT_NAME := light_detection_example
 
 include $(IDF_PATH)/make/project.mk

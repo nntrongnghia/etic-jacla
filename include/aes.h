@@ -1,3 +1,5 @@
+#pragma once
+
 #include <string.h>
 #include "mbedtls/aes.h"
 #include "math.h"
@@ -23,3 +25,5 @@ int aes_decrypt(const unsigned char *input, const size_t input_len, unsigned cha
     mbedtls_aes_free(&aes);
     return ret;
 }
+
+

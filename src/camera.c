@@ -47,7 +47,8 @@ esp_err_t app_camera_init()
     config.frame_size = CAMERA_FRAME_SIZE;
     config.jpeg_quality = 12;
     config.fb_count = CAMERA_FB_COUNT;
-    config.fb_location = CAMERA_FB_IN_PSRAM;
+    // config.fb_location = CAMERA_FB_IN_PSRAM;
+    config.fb_location = CAMERA_FB_IN_DRAM;
     config.grab_mode = CAMERA_GRAB_WHEN_EMPTY;
 
     // camera init

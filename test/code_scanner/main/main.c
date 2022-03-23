@@ -12,6 +12,7 @@
 #include "aes.h"
 #include "esp_code_scanner.h"
 #include "misc.h"
+#include "esp_heap_caps.h"
 
 static const char *TAG = "APP_CODE_SCANNER";
 const unsigned char dec_key[] = CONFIG_AES_KEY;
@@ -31,6 +32,7 @@ static void decode_task()
     // Init camera
     SANITY_CHECK_M(app_camera_init(), ESP_OK, TAG, "Fail to init camera");
     camera_fb_t *fb = NULL;
+    ESP_LOGI(TAG, "DMA free size: %zu bytes", heap_caps_get_free_size(MALLOC_CAP_DMA));
 
     while (1)
     {
@@ -47,7 +49,7 @@ static void decode_task()
         esp_code_scanner_config_t config = {ESP_CODE_SCANNER_MODE_FAST, ESP_CODE_SCANNER_IMAGE_RGB565, fb->width, fb->height};
         esp_code_scanner_set_config(esp_scn, config);
         int decoded_num = esp_code_scanner_scan_image(esp_scn, fb->buf);
-        ESP_LOGI(TAG, "Image size: %zu bytes", fb->len);
+        // ESP_LOGI(TAG, "Image size: %zu bytes", fb->len);
         if (decoded_num)
         {
             // Read QR code message

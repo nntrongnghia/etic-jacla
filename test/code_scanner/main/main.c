@@ -47,7 +47,7 @@ static void decode_task()
         esp_code_scanner_config_t config = {ESP_CODE_SCANNER_MODE_FAST, ESP_CODE_SCANNER_IMAGE_RGB565, fb->width, fb->height};
         esp_code_scanner_set_config(esp_scn, config);
         int decoded_num = esp_code_scanner_scan_image(esp_scn, fb->buf);
-
+        ESP_LOGI(TAG, "Image size: %zu bytes", fb->len);
         if (decoded_num)
         {
             // Read QR code message

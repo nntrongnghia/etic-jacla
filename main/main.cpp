@@ -6,9 +6,10 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "camera.h"
+#include "database.h"
 
 #include "esp_code_scanner.h"
 
-void app_main()
+extern "C" void app_main()
 {
 }

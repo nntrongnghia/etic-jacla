@@ -23,8 +23,6 @@ extern "C" void app_main(void)
 
     user_db.open();
 
-    ESP_LOGI(TAG, "dummy %d", user_db.get("dummy"));
-
     // user_db.set("123456", 1);
     // user_db.set("543210", 0);
 

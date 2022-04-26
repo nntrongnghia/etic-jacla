@@ -47,8 +47,6 @@ class ScanHistoryDB {
         void print_all_history();
 };
 
-// TODO convert char* uid to readable format
-
 
 
 

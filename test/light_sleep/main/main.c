@@ -12,25 +12,17 @@
 #include "esp_check.h"
 #include "driver/gpio.h"
 
-/* Most development boards have "boot" button attached to GPIO0.
- * You can also change this to another pin.
- */
-#if CONFIG_IDF_TARGET_ESP32C3 || CONFIG_IDF_TARGET_ESP32C2 || CONFIG_IDF_TARGET_ESP32H2
-#define BOOT_BUTTON_NUM         9
-#else
-#define BOOT_BUTTON_NUM         0
-#endif
+#define BOOT_BUTTON_NUM         8
 
 /* Use boot button as gpio input */
 #define GPIO_WAKEUP_NUM         BOOT_BUTTON_NUM
-/* "Boot" button is active low */
-#define GPIO_WAKEUP_LEVEL       0
+#define GPIO_WAKEUP_LEVEL       1
 
 static const char *TAG = "gpio_wakeup";
 
 void example_wait_gpio_inactive(void)
 {
-    ESP_LOGI(TAG, "Waiting for GPIO%d to go high...", GPIO_WAKEUP_NUM);
+    ESP_LOGI(TAG, "Waiting for GPIO%d to go low...", GPIO_WAKEUP_NUM);
     while (gpio_get_level(GPIO_WAKEUP_NUM) == GPIO_WAKEUP_LEVEL) {
         vTaskDelay(pdMS_TO_TICKS(10));
     }

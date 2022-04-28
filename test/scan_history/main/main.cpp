@@ -47,7 +47,7 @@ static void scan_history_task(void* arg)
     ESP_LOGI(TAG, "uid size %zd bytes", history_db.get_uid_size());
     ESP_LOGI(TAG, "Number of entries: %d", history_db.get_nb_entries());
 
-    // history_db.clear_history();
+    history_db.clear_history();
     // history_db.close();
 
     for(;;) {

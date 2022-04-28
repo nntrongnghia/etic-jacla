@@ -1,17 +1,7 @@
 #include "color14.h"
 #include "misc.h"
 
-#ifndef CONFIG_COLOR14_SDA
-#define CONFIG_COLOR14_SDA 1
-#endif
 
-#ifndef CONFIG_COLOR14_SCL
-#define CONFIG_COLOR14_SCL 2
-#endif
-
-#ifndef CONFIG_COLOR14_INT
-#define CONFIG_COLOR14_INT 42
-#endif
 
 /**
  * @brief i2c master initialization for Color 14

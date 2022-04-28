@@ -118,6 +118,7 @@ void ScanHistoryDB::clear_history(){
     err = nvs_commit(nvs_hist_ctrl);
     LOG_ERR(_tag, err);
     ESP_LOGI(_tag, "NVS Partition \"%s\" cleared", P_HISTORY_CTRL);
+    update_cursor(0);
 }
 
 size_t ScanHistoryDB::get_block_size(){

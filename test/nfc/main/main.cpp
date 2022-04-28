@@ -10,15 +10,6 @@
 
 static const char *TAG = "NFC_TEST";
 
-// example ATQA
-// LCL
-// 80 05 44 00 28 00 00
-
-// insa lyon
-// 80 05 44 03 28 00 00
-
-// jacla + bourso
-// 80 05 04 00 28 00 00
 
 static void nfc_task(void* arg)
 {

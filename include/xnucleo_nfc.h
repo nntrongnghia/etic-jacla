@@ -17,8 +17,8 @@
 #include "misc.h"
 
 
-#define NFC_IRQ_IN 40 // UART_RX
-#define NFC_IRQ_OUT 38 // UART_TX
+#define NFC_IRQ_IN 39 
+#define NFC_IRQ_OUT 38 
 
 // Define UART settings
 #define NFC_BAUDRATE 57600

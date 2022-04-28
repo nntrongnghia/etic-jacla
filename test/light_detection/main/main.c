@@ -39,11 +39,11 @@ static void light_detection_task()
 void app_main()
 {
     // Color14 init
-    SANITY_CHECK(color14_init(), ESP_OK);
-    color14_activate_light_sensor();
-    color14_enable_als_var_int();
+    ESP_ERROR_CHECK(color14_init());
+    ESP_ERROR_CHECK(color14_activate_light_sensor());
+    ESP_ERROR_CHECK(color14_enable_als_var_int());
     // color14_set_ls_persist(2);
-    color14_set_ls_thres_var(4);
+    ESP_ERROR_CHECK(color14_set_ls_thres_var(2));
 
     // ESP32 interrupt init
     gpio_config_t io_conf = {

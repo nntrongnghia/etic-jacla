@@ -28,7 +28,7 @@ static void nfc_task(void* arg)
     nfc_reader.init();
     nfc_reader.echo();
     nfc_reader.tag_detection_calibration();
-    // nfc_reader.idle_tag_detector(NFC_WU_TAG | NFC_WU_SPI_SS);
+    nfc_reader.idle_tag_detector(NFC_WU_TAG | NFC_WU_SPI_SS);
     while(1){
         // nfc_reader.listen(100/portTICK_PERIOD_MS);
         if(nfc_reader.is_tag_available()){

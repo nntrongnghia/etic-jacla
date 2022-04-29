@@ -118,6 +118,10 @@ typedef enum
 } color14_return_value_t;
 
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 
 /**
  * @brief i2c master initialization for Color 14
@@ -203,3 +207,7 @@ esp_err_t color14_set_ls_thres_var(uint8_t exp);
  * @return either 0 or 1
  */
 uint8_t color14_get_ls_int_status();
+
+#ifdef __cplusplus
+}
+#endif

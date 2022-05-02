@@ -216,13 +216,13 @@ void lora()
 
 void check_uid()
 {
-    //verify ID
-    //if ok : relay ON, green led
-    //else : relay OFF, red led
-    bool uid_read = true;
+    bool uid_read;
     if(uid_read)
     {
         set_led_color(1);
+        set_relay(1);
+        vTaskDelay(5000/portTICK_PERIOD_MS);
+        set_relay(0);
     }
     else
     {

@@ -13,10 +13,11 @@
 #include "database.h"
 #include "driver/gpio.h"
 #include "driver/uart.h"
-
+#include "esp_err.h"
 #include "esp_code_scanner.h"
 #include "color14.h"
 #include "xnucleo_nfc.h"
+#include "led_relay.h"
 
 #define BRIGHTNESS_THRESHOLD 2
 #define EXAMPLE_UART_WAKEUP_THRESHOLD   3
@@ -81,7 +82,12 @@ extern "C" void app_main()
 
 esp_err_t init()
 {
-    // Color14 init
+    /**** Led & Relay init ****/
+    led_init();
+    set_led_color(2);
+    relay_init();
+    set_relay(0);
+    /**** Color14 init ****/
     ESP_ERROR_CHECK(color14_init());
     ESP_ERROR_CHECK(color14_activate_light_sensor());
     ESP_ERROR_CHECK(color14_enable_als_var_int());
@@ -101,9 +107,10 @@ esp_err_t init()
                         TAG, "Enable gpio wakeup failed");
     ESP_RETURN_ON_ERROR(esp_sleep_enable_gpio_wakeup(), TAG, "Configure gpio as wakeup source failed");
 
-    // Camera init
+    /**** Camera init ****/
 
-    // RFID init
+
+    /**** NFC init ****/
     nfc_reader.init();
     nfc_reader.echo();
     nfc_reader.tag_detection_calibration();
@@ -121,7 +128,8 @@ esp_err_t init()
 }
 
 state_t idle()
-{
+{   
+    set_led_color(0);
     state_t ret = IDLE;
     //calculate timer interrupt
     //enable timer wake up
@@ -169,7 +177,7 @@ state_t idle()
 }
 void read_qr()
 {
-    //led orange
+    set_led_color(3);
     //wake up camera
     //read QRcode
     //decrypt message
@@ -178,7 +186,7 @@ void read_qr()
 }
 void read_rfid()
 {
-    //led orange
+    set_led_color(3);
     //read ID
     //retrun ID
 
@@ -211,4 +219,13 @@ void check_uid()
     //verify ID
     //if ok : relay ON, green led
     //else : relay OFF, red led
+    bool uid_read = true;
+    if(uid_read)
+    {
+        set_led_color(1);
+    }
+    else
+    {
+        set_led_color(3);
+    }
 }

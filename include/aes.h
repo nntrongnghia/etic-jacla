@@ -5,6 +5,12 @@
 #include "math.h"
 #define AES_BLOCK_SIZE 16 // bytes
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
+
 
 int aes_decrypt(const unsigned char *input, const size_t input_len, unsigned char *dec_out, const unsigned char *key)
 {
@@ -27,3 +33,7 @@ int aes_decrypt(const unsigned char *input, const size_t input_len, unsigned cha
 }
 
 
+
+#ifdef __cplusplus
+}
+#endif

@@ -141,6 +141,8 @@ bool XNucleoNFC::is_tag_available()
     bool ret = 0;
     check_uart_ret(tag, uart_write_bytes(NFC_UART_PORT, cmd, 4));
     size_t len = wait_get_uart_response(10, 10);
+    // ESP_LOGI("is_tag_available", "len %d", len);
+    // ESP_LOG_BUFFER_HEX("is_tag_available", rx_buffer, len);
     if(len > 2 && rx_buffer[0] == 0x80 && rx_buffer[1] == 0x05){
         ret = 1;
         update_uid_size(rx_buffer[2]);

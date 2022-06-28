@@ -7,8 +7,8 @@
 #include "freertos/task.h"
 #include "camera.h"
 #include "database.h"
-
 #include "esp_code_scanner.h"
+#include "color14.h"
 
 typedef enum {
     INIT, IDLE, 
@@ -16,7 +16,9 @@ typedef enum {
     CHECK_UID, LORA
 } state_t;
 
-void init();
+void init(){
+    color14_init();
+}
 state_t idle();
 void read_qr();
 void read_rfid();

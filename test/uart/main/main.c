@@ -5,59 +5,59 @@
 #include "driver/gpio.h"
 #include "sdkconfig.h"
 #include "esp_log.h"
-
-/**
- * This is an example which echos any data it receives on configured UART back to the sender,
- * with hardware flow control turned off. It does not use UART driver event queue.
- *
- * - Port: configured UART
- * - Receive (Rx) buffer: on
- * - Transmit (Tx) buffer: off
- * - Flow control: off
- * - Event queue: off
- * - Pin assignment: see defines below (See Kconfig)
- */
-
-#define TXL (4)
-#define RXL (5)
-
-#define ECHO_UART_BAUD_RATE     115200
-
-#define BUF_SIZE (1024)
-
+#include "string.h"
 static const char *TAG = "LORA";
 
-void app_main(void)
+static const int RX_BUF_SIZE = 1024;
+
+#define U1TXD (17)
+#define U1RXD (18)
+
+#define UART UART_NUM_2
+
+void init(void) 
 {
-    /* Configure parameters of an UART driver,
-     * communication pins and install the driver */
-    uart_config_t uart_config = {
-        .baud_rate = ECHO_UART_BAUD_RATE,
+    const uart_config_t uart_config = {
+        .baud_rate = 115200,
         .data_bits = UART_DATA_8_BITS,
-        .parity    = UART_PARITY_DISABLE,
+        .parity = UART_PARITY_DISABLE,
         .stop_bits = UART_STOP_BITS_1,
         .flow_ctrl = UART_HW_FLOWCTRL_DISABLE,
         .source_clk = UART_SCLK_APB,
     };
 
-    ESP_ERROR_CHECK(uart_driver_install(UART_NUM_0, BUF_SIZE * 2, 0, 0, NULL, 0));
-    ESP_ERROR_CHECK(uart_param_config(UART_NUM_0, &uart_config));
-    ESP_ERROR_CHECK(uart_set_pin(UART_NUM_0, TXL, RXL, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE));
+    // We won't use a buffer for sending data.
+    uart_driver_install(UART, RX_BUF_SIZE * 2, 0, 0, NULL, 0);
+    uart_param_config(UART, &uart_config);
+    uart_set_pin(UART, U1TXD, U1RXD, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE);
+}
 
-    // Configure a temporary buffer for the incoming data
-    uint8_t *data = (uint8_t *) malloc(BUF_SIZE);
-    vTaskDelay(100/portTICK_PERIOD_MS);
-    uart_write_bytes(UART_NUM_0, "AT+VER=?\r\n", 11);
+void app_main(void)
+{
+    init();
+	char* Txdata = (char*) malloc(100);
+    __int8_t num = 0;
+    vTaskDelay(5000 / portTICK_PERIOD_MS);
 
-    while (1)
-    {
-        // Read data from the UART
-        int len = uart_read_bytes(UART_NUM_0, data, BUF_SIZE, 20 / portTICK_RATE_MS);
-        if(len>0)
-        {
-            data[len]='\0';
-            ESP_LOGI(TAG, "%s", data);
-            fflush(stdout);
-        }
+    sprintf(Txdata, "AT+DEVEUI=AC1F09FFFE05464A?\r\n");
+    uart_write_bytes(UART, Txdata, strlen(Txdata));
+    vTaskDelay(2000 / portTICK_PERIOD_MS);
+
+    sprintf(Txdata, "AT+APPEUI=0000000000000001?\r\n");
+    uart_write_bytes(UART, Txdata, strlen(Txdata));
+    vTaskDelay(2000 / portTICK_PERIOD_MS);
+
+    sprintf(Txdata, "AT+APPKEY=796B3580CEE62BA795DF7E452BBE708E?\r\n");
+    uart_write_bytes(UART, Txdata, strlen(Txdata));
+    vTaskDelay(2000 / portTICK_PERIOD_MS);
+
+    sprintf(Txdata, "AT+JOIN=1:0:10:8?\r\n");
+    uart_write_bytes(UART, Txdata, strlen(Txdata));
+    vTaskDelay(2000 / portTICK_PERIOD_MS);
+
+    while (1) {
+    	sprintf(Txdata, "AT+SEND=2:12345678?\r\n");
+        uart_write_bytes(UART, Txdata, strlen(Txdata));
+        vTaskDelay(10000 / portTICK_PERIOD_MS);
     }
 }

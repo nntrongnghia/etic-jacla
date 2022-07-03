@@ -150,7 +150,7 @@ static esp_err_t camera_probe(const camera_config_t *config, camera_model_t *out
     }
 
     if (config->pin_pwdn >= 0) {
-        ESP_LOGD(TAG, "Resetting camera by power down line");
+        ESP_LOGI(TAG, "Resetting camera by power down line");
         gpio_config_t conf = { 0 };
         conf.pin_bit_mask = 1LL << config->pin_pwdn;
         conf.mode = GPIO_MODE_OUTPUT;
@@ -164,7 +164,7 @@ static esp_err_t camera_probe(const camera_config_t *config, camera_model_t *out
     }
 
     if (config->pin_reset >= 0) {
-        ESP_LOGD(TAG, "Resetting camera");
+        ESP_LOGI(TAG, "Resetting camera");
         gpio_config_t conf = { 0 };
         conf.pin_bit_mask = 1LL << config->pin_reset;
         conf.mode = GPIO_MODE_OUTPUT;
@@ -217,10 +217,11 @@ static esp_err_t camera_probe(const camera_config_t *config, camera_model_t *out
     ESP_LOGI(TAG, "Camera PID=0x%02x VER=0x%02x MIDL=0x%02x MIDH=0x%02x",
              id->PID, id->VER, id->MIDH, id->MIDL);
 
-    ESP_LOGD(TAG, "Doing SW reset of sensor");
+    ESP_LOGI(TAG, "Doing SW reset of sensor");
     vTaskDelay(10 / portTICK_PERIOD_MS);
     s_state->sensor.reset(&s_state->sensor);
-
+    ESP_LOGI(TAG, "After reseting"); 
+  
     return ESP_OK;
 }
 

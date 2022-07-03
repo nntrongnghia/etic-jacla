@@ -15,7 +15,7 @@
 #include "esp_heap_caps.h"
 
 static const char *TAG = "APP_CODE_SCANNER";
-const unsigned char dec_key[] = CONFIG_AES_KEY;
+const unsigned char dec_key[] = "#LogKerKey2022!!";//CONFIG_AES_KEY;
 const unsigned int keybits = 128;
 
 static void decode_task()
@@ -23,6 +23,7 @@ static void decode_task()
     int64_t time1, time2, time3;
     // Init AES
     size_t dec_len;
+    int num_codes;
     unsigned char dec_output[128];
     unsigned char dec_input[128];
     // Check AES key
@@ -33,6 +34,7 @@ static void decode_task()
     SANITY_CHECK_M(app_camera_init(), ESP_OK, TAG, "Fail to init camera");
     camera_fb_t *fb = NULL;
     ESP_LOGI(TAG, "DMA free size: %zu bytes", heap_caps_get_free_size(MALLOC_CAP_DMA));
+
 
     while (1)
     {
@@ -46,9 +48,11 @@ static void decode_task()
         time1 = esp_timer_get_time();
         // Decode Progress
         esp_image_scanner_t *esp_scn = esp_code_scanner_create();
-        esp_code_scanner_config_t config = {ESP_CODE_SCANNER_MODE_FAST, ESP_CODE_SCANNER_IMAGE_RGB565, fb->width, fb->height};
+        if(!esp_scn) ESP_LOGE(TAG, "Fail to create ESP code scanner");
+        esp_code_scanner_config_t config = {ESP_CODE_SCANNER_MODE_FAST, ESP_CODE_SCANNER_IMAGE_GRAY, fb->width, fb->height};
         esp_code_scanner_set_config(esp_scn, config);
         int decoded_num = esp_code_scanner_scan_image(esp_scn, fb->buf);
+        ESP_LOGI(TAG, "decoded_num %d", decoded_num);
         // ESP_LOGI(TAG, "Image size: %zu bytes", fb->len);
         if (decoded_num)
         {
@@ -77,5 +81,5 @@ static void decode_task()
 
 void app_main()
 {
-    xTaskCreatePinnedToCore(decode_task, TAG, 4 * 1024, NULL, 6, NULL, 0);
+    xTaskCreatePinnedToCore(decode_task, TAG, 100 * 1024, NULL, 6, NULL, 0);
 }

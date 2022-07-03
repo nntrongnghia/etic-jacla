@@ -3,69 +3,69 @@ menu "Main configuration"
   menu "Wifi Configuration"
     config WIFI_SSID
       string "Wifi SSID"
-      default "****"
+      default "Gaëtan Wi-Fi"
     config WIFI_PASSWORD
       string "Wifi password"
-      default "****"
+      default "00000000"
   endmenu
 
   menu "Camera configuration"
 
     config XCLK_FREQ
       int "XCLK Frequency"
-      default "20000000"
+      default "10000000"
       help
         The XCLK Frequency in Herz.
     
     config ESP32_SPIRAM_SUPPORT
       bool "PSRAM support"
-      default y
+      default n
       help
         PSRAM support for camera
 
-    menu "Pin Configuration"
+menu "Pin Configuration"
       config D0
         int "D0"
-        default "34"
+        default "13"
       config D1
         int "D1"
-        default "13"
+        default "16"
       config D2
         int "D2"
-        default "14"
+        default "12"
       config D3
         int "D3"
-        default "35"
+        default "15"
       config D4
         int "D4"
-        default "39"
+        default "11"
       config D5
         int "D5"
-        default "38"
+        default "7"
       config D6
         int "D6"
-        default "37"
+        default "10"
       config D7
         int "D7"
-        default "36"
+        default "6"
       config XCLK
         int "XCLK"
-        default "4"
+        default "9"
       config PCLK
         int "PCLK"
-        default "25"
+        default "5"
       config VSYNC
         int "VSYNC"
-        default "5"
+        default "4"
       config HREF
         int "HREF"
-        default "27"
+        default "46"
       config SDA
         int "SDA"
         default "18"
       config SCL
         int "SCL"
-        default "23"
+        default "14"
       config RESET
         int "RESET"
         default "-1"
@@ -120,3 +120,4 @@ menu "Main configuration"
   endmenu
 	
 endmenu
+

@@ -2,21 +2,21 @@ menu "Camera configuration"
 
     config OV7670_SUPPORT
         bool "Support OV7670 VGA"
-        default y
+        default n
         help
             Enable this option if you want to use the OV7670.
             Disable this option to save memory.
 
     config OV7725_SUPPORT
         bool "Support OV7725 VGA"
-        default y
+        default n
         help
             Enable this option if you want to use the OV7725.
             Disable this option to save memory.
 
     config NT99141_SUPPORT
         bool "Support NT99141 HD"
-        default y
+        default n
         help
             Enable this option if you want to use the NT99141.
             Disable this option to save memory.
@@ -30,49 +30,49 @@ menu "Camera configuration"
 
     config OV3660_SUPPORT
         bool "Support OV3660 3MP"
-        default y
+        default n
         help
             Enable this option if you want to use the OV3360.
             Disable this option to save memory.
 
     config OV5640_SUPPORT
         bool "Support OV5640 5MP"
-        default y
+        default n
         help
             Enable this option if you want to use the OV5640.
             Disable this option to save memory.
 
     config GC2145_SUPPORT
         bool "Support GC2145 2MP"
-        default y
+        default n
         help
             Enable this option if you want to use the GC2145.
             Disable this option to save memory.
 
     config GC032A_SUPPORT
         bool "Support GC032A VGA"
-        default y
+        default n
         help
             Enable this option if you want to use the GC032A.
             Disable this option to save memory.
 
     config GC0308_SUPPORT
         bool "Support GC0308 VGA"
-        default y
+        default n
         help
             Enable this option if you want to use the GC0308.
             Disable this option to save memory.
             
     config BF3005_SUPPORT
         bool "Support BF3005(BYD3005) VGA"
-        default y
+        default n
         help
             Enable this option if you want to use the BF3005.
             Disable this option to save memory.
             
     config BF20A6_SUPPORT
         bool "Support BF20A6(BYD20A6) VGA"
-        default y
+        default n
         help
             Enable this option if you want to use the BF20A6.
             Disable this option to save memory.

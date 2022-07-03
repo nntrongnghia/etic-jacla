@@ -11,6 +11,7 @@
  * @brief Camera pin configuration
  * 
  */
+/*
 #define CAMERA_MODULE_NAME "ESP-EYE"
 #define CAMERA_PIN_PWDN -1
 #define CAMERA_PIN_RESET -1
@@ -29,9 +30,30 @@
 #define CAMERA_PIN_VSYNC 5
 #define CAMERA_PIN_HREF 27
 #define CAMERA_PIN_PCLK 25
+*/
+
+#define CAMERA_MODULE_NAME "ESP-EYE"
+#define CAMERA_PIN_PWDN 2
+#define CAMERA_PIN_RESET 1
+
+#define CAMERA_PIN_XCLK 9
+#define CAMERA_PIN_SIOD 18
+#define CAMERA_PIN_SIOC 14
+
+#define CAMERA_PIN_D7 6
+#define CAMERA_PIN_D6 10
+#define CAMERA_PIN_D5 7
+#define CAMERA_PIN_D4 11
+#define CAMERA_PIN_D3 15
+#define CAMERA_PIN_D2 12
+#define CAMERA_PIN_D1 16
+#define CAMERA_PIN_D0 13
+#define CAMERA_PIN_VSYNC 4
+#define CAMERA_PIN_HREF 46
+#define CAMERA_PIN_PCLK 5
 
 #define XCLK_FREQ_HZ 20000000
-#define CAMERA_PIXFORMAT PIXFORMAT_RGB565
+#define CAMERA_PIXFORMAT PIXFORMAT_GRAYSCALE
 #define CAMERA_FRAME_SIZE FRAMESIZE_240X240
 #define CAMERA_FB_COUNT 1
 
@@ -47,4 +69,5 @@ extern "C"
 #ifdef __cplusplus
 }
 #endif
+
 

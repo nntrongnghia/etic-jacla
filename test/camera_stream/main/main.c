@@ -15,8 +15,8 @@ static camera_config_t camera_config = {
     .pin_pwdn = CONFIG_PWDN,
     .pin_reset = CONFIG_RESET,
     .pin_xclk = CONFIG_XCLK,
-    .pin_sscb_sda = CONFIG_SDA,
-    .pin_sscb_scl = CONFIG_SCL,
+    .pin_sscb_sda = 3,
+    .pin_sscb_scl = 42,
 
     .pin_d7 = CONFIG_D7,
     .pin_d6 = CONFIG_D6,

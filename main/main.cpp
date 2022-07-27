@@ -20,7 +20,7 @@
 #include "led_relay.h"
 
 #define BRIGHTNESS_THRESHOLD 2
-#define EXAMPLE_UART_WAKEUP_THRESHOLD   3
+#define EXAMPLE_UART_WAKEUP_THRESHOLD 3
 
 typedef enum
 {
@@ -103,8 +103,7 @@ esp_err_t init()
         .intr_type = GPIO_INTR_DISABLE};
     gpio_config(&io_conf);
     /* Enable wake up from GPIO */
-    ESP_RETURN_ON_ERROR(gpio_wakeup_enable((gpio_num_t)CONFIG_COLOR14_INT, GPIO_INTR_LOW_LEVEL),
-                        TAG, "Enable gpio wakeup failed");
+    ESP_RETURN_ON_ERROR(gpio_wakeup_enable((gpio_num_t)CONFIG_COLOR14_INT, GPIO_INTR_LOW_LEVEL), TAG, "Enable gpio wakeup failed");
     ESP_RETURN_ON_ERROR(esp_sleep_enable_gpio_wakeup(), TAG, "Configure gpio as wakeup source failed");
 
     /**** Camera init ****/
@@ -119,16 +118,14 @@ esp_err_t init()
      * Besides, the Rx pin need extra configuration to enable it can work during light sleep */
     ESP_RETURN_ON_ERROR(gpio_sleep_set_direction((gpio_num_t)NFC_IRQ_OUT, GPIO_MODE_INPUT), TAG, "Set uart sleep gpio failed");
     ESP_RETURN_ON_ERROR(gpio_sleep_set_pull_mode((gpio_num_t)NFC_IRQ_OUT, GPIO_PULLUP_ONLY), TAG, "Set uart sleep gpio failed");
-    ESP_RETURN_ON_ERROR(uart_set_wakeup_threshold(NFC_UART_PORT, EXAMPLE_UART_WAKEUP_THRESHOLD),
-                        TAG, "Set uart wakeup threshold failed");
+    ESP_RETURN_ON_ERROR(uart_set_wakeup_threshold(NFC_UART_PORT, EXAMPLE_UART_WAKEUP_THRESHOLD), TAG, "Set uart wakeup threshold failed");
     /* Only uart0 and uart1 (if has) support to be configured as wakeup source */
-    ESP_RETURN_ON_ERROR(esp_sleep_enable_uart_wakeup(NFC_UART_PORT),
-                        TAG, "Configure uart as wakeup source failed");
+    ESP_RETURN_ON_ERROR(esp_sleep_enable_uart_wakeup(NFC_UART_PORT), TAG, "Configure uart as wakeup source failed");
     return ESP_OK;
 }
 
 state_t idle()
-{   
+{
     set_led_color(0);
     state_t ret = IDLE;
     //calculate timer interrupt
@@ -167,8 +164,7 @@ state_t idle()
         ret = IDLE;
         break;
     }
-    ESP_LOGI(TAG, "Returned from light sleep, reason: %s, t=%lld ms, slept for %lld ms",
-                wakeup_reason, t_after_us / 1000, (t_after_us - t_before_us) / 1000);
+    ESP_LOGI(TAG, "Returned from light sleep, reason: %s, t=%lld ms, slept for %lld ms", wakeup_reason, t_after_us / 1000, (t_after_us - t_before_us) / 1000);
     // if (esp_sleep_get_wakeup_cause() == ESP_SLEEP_WAKEUP_GPIO) {
     //     /* Waiting for the gpio inactive, or the chip will continously trigger wakeup*/
     //     example_wait_gpio_inactive();

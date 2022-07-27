@@ -1,0 +1,101 @@
+menu "RAK3172"
+    menu "Modes"
+        config RAK3172_WITH_LORAWAN
+            bool "Include LoRaWAN"
+            default y
+            help
+                Enable this option if you want to use the LoRaWAN mode.
+
+        config RAK3172_WITH_P2P
+            bool "Include P2P"
+            default n
+            help
+                Enable this option if you want to use the LoRa P2P mode.
+    endmenu
+
+    menu "Interface"
+        config RAK3172_UART
+            int "UART port number"
+            range 0 2
+            default 2
+            help
+                UART communication port number for the driver.
+                See UART documentation for available port numbers.
+
+        config RAK3172_DEFAULT_BAUD
+            choice RAK3172_BAUD
+                prompt "UART default baud rate"
+                default RAK3172_BAUD_115200
+
+            config RAK3172_BAUD_4800
+                bool "4800"
+
+            config RAK3172_BAUD_9600
+                bool "9600"
+
+            config RAK3172_BAUD_115200
+                bool "115200"
+
+            endchoice
+
+        config RAK3172_BAUD
+            int
+            default 9600
+            default 4800 if RAK3172_BAUD_4800
+            default 9600 if RAK3172_BAUD_9600
+            default 115200 if RAK3172_BAUD_115200
+    endmenu
+
+    menu "Pins"
+        config RAK3172_RX
+            int "RAK3172 Rx pin"
+            range 0 32
+            default 5
+            help
+                RAK3172 UART interface Rx pin.
+
+        config RAK3172_TX
+            int "RAK3172 Tx pin"
+            range 0 32
+            default 4
+            help
+                RAK3172 UART interface Tx pin.
+
+        config RAK3172_RESET
+            int "RAK3172 Tx pin"
+            range 0 32
+            default 15
+            help
+                RAK3172 reset pin.
+    endmenu
+
+    menu "FreeRTOS"
+        config RAK3172_TASK_PRIO
+            int "Receive task priority"
+            range 12 25
+            default 12
+            help
+                Task priority for the UART receive task.
+
+        config RAK3172_BUFFER_SIZE
+            int "Buffer size"
+            range 1024 2048
+            default 1024
+            help
+                Buffer size for the UART receive buffer.
+
+        config RAK3172_QUEUE_LENGTH
+            int "Queue length"
+            range 4 16
+            default 8
+            help
+                Queue length for the UART receive buffer.
+
+        config RAK3172_CORE_AFFINITY
+            bool "Use core affinity"
+            default n
+            help
+                Enable this option if you want to use a specific core for the driver.
+    endmenu
+
+endmenu

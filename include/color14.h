@@ -9,9 +9,9 @@
 #include "driver/i2c.h"
 
 
-#define CONFIG_COLOR14_SDA 3
+#define CONFIG_COLOR14_SDA 42
 
-#define CONFIG_COLOR14_SCL 42
+#define CONFIG_COLOR14_SCL 3
 
 #define CONFIG_COLOR14_INT 8
 

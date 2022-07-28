@@ -1,10 +1,10 @@
 #include <esp_log.h>
 #include <esp_task_wdt.h>
+#include <esp_sleep.h>
 
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 #include <freertos/event_groups.h>
-
 #include "rak3172.h"
 
 #include "LoRaWAN_Default.h"
@@ -58,7 +58,7 @@ static void applicationTask(void* p_Parameter)
         {
             ESP_LOGI(TAG, "Joined...");
 
-            char Payload[] = {'H', 'e', 'l', 'l', 'o', ' ', 'J', 'a', 'c', 'l', 'a'};
+            /*char Payload[] = {'H', 'e', 'l', 'l', 'o', ' ', 'J', 'a', 'c', 'l', 'a'};
 
             Error = RAK3172_LoRaWAN_Transmit(&_Device, 1, Payload, sizeof(Payload), LORAWAN_TX_TIMEOUT_S, true, NULL);
             if(Error == RAK3172_INVALID_RESPONSE)
@@ -68,34 +68,107 @@ static void applicationTask(void* p_Parameter)
             else
             {
                 ESP_LOGI(TAG, "Message transmitted...");
-            }
-            
-                /*std::string recv;
-                RAK3172_SendCommand(&_Device, "AT+RECV=?", &recv, NULL);
+            }*/
 
-                int RSSI = (int8_t)std::stoi(recv);
-                ESP_LOGI(TAG, "RECV : %d", RSSI);*/
-
-            std::string receiver_string;
-            int RSSI;
-            int SNR;
+            /*std::string s0 ("Initial string");
             ESP_LOGI(TAG, "0");
-            Error = RAK3172_LoRaWAN_Receive(&_Device, &receiver_string, &RSSI, &SNR, LORAWAN_RX_TIMEOUT_S);
+            Error = RAK3172_LoRaWAN_Receive(&_Device, NULL, NULL, NULL, LORAWAN_RX_TIMEOUT_S);
+             ESP_LOGI(TAG, "%d", Error);
             if(Error == RAK3172_INVALID_RESPONSE)
             {
                 ESP_LOGI(TAG, "Invalid response");
             }
-            else if (RAK3172_INVALID_ARG)
+            else if (Error == RAK3172_INVALID_ARG)
             {
                 ESP_LOGI(TAG, "Arguments");
             }
-            else
+            else if(Error == RAK3172_OK)
             {
                 ESP_LOGI(TAG, "Success !");
-            }        
-        }
-    }
+            }*/
+            std::string payload;
 
+            RAK3172_t* p_Device = &_Device;
+            std::string *p_Payload = &payload;
+            int* p_RSSI = NULL;
+            int* p_SNR = NULL;
+            uint32_t Timeout = 60;
+
+            ESP_LOGI(TAG, "1");
+            ESP_LOGI(TAG, "Initialize module in LoRaWAN mode...");
+
+            uint32_t Now;
+
+            if((p_Payload == NULL) || (Timeout <= 1))
+            {
+                ESP_LOGI(TAG, "Initialize module in LoRaWAN mode...");
+            }
+            ESP_LOGI(TAG, "2");
+
+            Now = esp_timer_get_time() / 1000ULL;
+            std::string* Line;
+
+            while(true)
+            {
+                ESP_LOGI(TAG, "3");
+                if(xQueueReceive(p_Device->Internal.Rx_Queue, &Line, 100 / portTICK_PERIOD_MS) == pdPASS)
+                {
+                    int Index;
+
+                    ESP_LOGI(TAG, "Receive event: %s", Line->c_str());
+
+                    // Get the RX metadata first.
+                    if(Line->find("RX") != std::string::npos)
+                    {
+                        std::string Dummy;
+
+                        // Get the RSSI value.
+                        if(p_RSSI != NULL)
+                        {
+                            Index = Line->find(",");
+                            Dummy = Line->substr(Index + 7, Index + Line->find(",", Index) + 1);
+                            *p_RSSI = std::stoi(Dummy);
+                        }
+
+                        // Get the SNR value.
+                        if(p_SNR != NULL)
+                        {
+                            Index = Line->find_last_of(",");
+                            Dummy = Line->substr(Index + 6, Line->length() - 1);
+                            *p_SNR = std::stoi(Dummy);
+                        }
+                    }
+
+                    // Then get the data and leave the function.
+                    if(Line->find("UNICAST") != std::string::npos)
+                    {
+                        //Line = p_Device->p_Interface->readStringUntil('\n');
+                        ESP_LOGI(TAG, "    Payload: %s", Line->c_str());
+
+                        // Clean up the payload string ("+EVT:Port:Payload")
+                        //  - Remove the "+EVT" indicator
+                        //  - Remove the port number
+                        *p_Payload = Line->substr(Line->find_last_of(":") + 1, Line->length());
+                        break;
+                    }
+                }
+
+                //delete Line;
+
+                ESP_LOGI(TAG, "4");
+                if((Timeout > 0) && ((((esp_timer_get_time() / 1000ULL) - Now) / 1000ULL) >= Timeout))
+                {
+                    ESP_LOGE(TAG, "Receive timeout!");
+                    break;
+                }
+                esp_sleep_enable_timer_wakeup(100 * 1000ULL);
+                esp_light_sleep_start();
+                vTaskDelay(10 / portTICK_RATE_MS);
+                ESP_LOGI(TAG, "7");
+            }
+        } //else
+    } // if(!status)
+            
     while(true)
     {
         esp_task_wdt_reset();
@@ -109,3 +182,12 @@ extern "C" void app_main(void)
     ESP_LOGI(TAG, "IDF: %s", esp_get_idf_version());
     xTaskCreatePinnedToCore(applicationTask, TAG, 100 * 1024, NULL, 6, NULL, 0);
 }
+
+         /*std::string p_Payload;
+            int p_RSSI;
+            int p_SNR;
+                std::string recv;
+                RAK3172_SendCommand(&_Device, "AT+RECV=?", &recv, NULL);
+
+                int RSSI = (int8_t)std::stoi(recv);
+                ESP_LOGI(TAG, "RECV : %d", RSSI);*/

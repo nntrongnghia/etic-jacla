@@ -406,10 +406,13 @@ RAK3172_Error_t RAK3172_LoRaWAN_Transmit(RAK3172_t* p_Device, uint8_t Port, cons
 RAK3172_Error_t RAK3172_LoRaWAN_Receive(RAK3172_t* p_Device, std::string* p_Payload, int* p_RSSI, int* p_SNR, uint32_t Timeout)
 {
     ESP_LOGI(TAG, "1");
+    ESP_LOGI(TAG, "Initialize module in LoRaWAN mode...");
+
     uint32_t Now;
 
     if((p_Payload == NULL) || (Timeout <= 1))
     {
+        ESP_LOGI(TAG, "Initialize module in LoRaWAN mode...");
         return RAK3172_INVALID_ARG;
     }
     ESP_LOGI(TAG, "2");

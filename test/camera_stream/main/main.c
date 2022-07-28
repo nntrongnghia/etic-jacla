@@ -12,23 +12,23 @@
 static const char *TAG = "example:http_jpg";
 /****************** Camera configuration *******************/
 static camera_config_t camera_config = {
-    .pin_pwdn = CONFIG_PWDN,
-    .pin_reset = CONFIG_RESET,
-    .pin_xclk = CONFIG_XCLK,
-    .pin_sscb_sda = 3,
-    .pin_sscb_scl = 42,
+    .pin_pwdn = -1,
+    .pin_reset = -1,
+    .pin_xclk = 5,
+    .pin_sscb_sda = 42,
+    .pin_sscb_scl = 3,
 
-    .pin_d7 = CONFIG_D7,
-    .pin_d6 = CONFIG_D6,
-    .pin_d5 = CONFIG_D5,
-    .pin_d4 = CONFIG_D4,
-    .pin_d3 = CONFIG_D3,
-    .pin_d2 = CONFIG_D2,
-    .pin_d1 = CONFIG_D1,
-    .pin_d0 = CONFIG_D0,
-    .pin_vsync = CONFIG_VSYNC,
-    .pin_href = CONFIG_HREF,
-    .pin_pclk = CONFIG_PCLK,
+    .pin_d7 = 10,
+    .pin_d6 = 6,
+    .pin_d5 = 11,
+    .pin_d4 = 7,
+    .pin_d3 = 12,
+    .pin_d2 = 15,
+    .pin_d1 = 13,
+    .pin_d0 = 16,
+    .pin_vsync = 46,
+    .pin_href = 4,
+    .pin_pclk = 9,
 
     //XCLK 20MHz or 10MHz
     .xclk_freq_hz = CONFIG_XCLK_FREQ,
@@ -281,4 +281,3 @@ void app_main()
   init_camera();
   initialise_wifi(&server);
 }
-

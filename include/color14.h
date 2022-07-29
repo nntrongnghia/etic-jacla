@@ -29,7 +29,7 @@
  * @brief Color 14 pin configuration
  * 
  */
-#define COLOR14_I2C_MASTER_NUM 1
+#define COLOR14_I2C_MASTER_NUM  0
 #define COLOR14_I2C_FREQ_HZ 100000
 
 

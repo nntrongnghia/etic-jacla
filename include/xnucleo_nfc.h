@@ -18,7 +18,7 @@
 
 
 #define NFC_IRQ_IN 39 
-#define NFC_IRQ_OUT 38 
+#define NFC_IRQ_OUT 38
 
 // Define UART settings
 #define NFC_BAUDRATE 57600

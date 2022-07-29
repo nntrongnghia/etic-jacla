@@ -2,7 +2,10 @@
 
 #include "esp_err.h"
 
-
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 
 struct esp_image_scanner_s;
 /** opaque image scanner object. */
@@ -100,3 +103,7 @@ void esp_code_scanner_destroy(esp_image_scanner_t* scanner);
  *  	- Returns NULL if no data is recognized
  */
 const esp_code_scanner_symbol_t esp_code_scanner_result(esp_image_scanner_t* scanner);
+
+#ifdef __cplusplus
+}
+#endif

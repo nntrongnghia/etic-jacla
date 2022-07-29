@@ -18,7 +18,7 @@ static const char *TAG = "APP_CODE_SCANNER";
 const unsigned char dec_key[] = "#LogKerKey2022!!";//CONFIG_AES_KEY;
 const unsigned int keybits = 128;
 
-static void decode_task()
+static void decode_task(void* arg)
 {
     int64_t time1, time2, time3;
     // Init AES
@@ -79,7 +79,7 @@ static void decode_task()
     }
 }
 
-void app_main()
+extern "C" void app_main(void)
 {
     xTaskCreatePinnedToCore(decode_task, TAG, 100 * 1024, NULL, 6, NULL, 0);
 }
